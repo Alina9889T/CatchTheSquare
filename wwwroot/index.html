@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Catch the Square</title>
+
+    <link rel="stylesheet" href="style.css?v=6">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+
+<body class="theme-loading" aria-busy="true">
+
+    <div class="game">
+        <h1>🎯 Catch the Square</h1>
+        <button id="user-settings-button" type="button" aria-label="User settings" title="User settings"><span aria-hidden="true">&#9881;&#65038;</span></button>
+
+        <div class="stats">
+            <div class="panel"><div class="stat-heading">Level</div><div class="value" id="level-stat">1</div></div>
+            <div class="panel"><div class="stat-heading">Time</div><div class="value" id="time-stat">10</div></div>
+            <div class="panel">
+                <div class="scorePanel stat-heading">
+                    <div>Score</div>
+                    <div id="best-score-stat">🏆<strong>0</strong></div>
+                </div>
+                <div class="scorePanel">
+                    <div class="value scoreValue" id="level-score-stat">0</div>
+                    <div class="value scoreValue" id="total-score-stat">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-area">
+            <button id="square" class="level1 disabled"></button>
+            <button id="circle" class="hidden"></button>
+
+            <section id="level-completed" class="overlay-card hidden">
+                <div class="overlay-card-icon">✅</div>
+                <h2>Level Completed!</h2>
+                <p>Level score</p>
+                <strong id="level-score" class="overlay-card-score">0</strong>
+                <button id="next-button" class="main-button">
+                    NEXT LEVEL
+                </button>
+            </section>
+
+            <section id="game-over" class="overlay-card hidden">
+                <div class="overlay-card-icon">🏆</div>
+                <h2>Game Over!</h2>
+                <p>Your final score</p>
+                <strong id="final-score" class="overlay-card-score">0</strong>
+                <button id="restart-button" class="main-button">
+                    PLAY AGAIN
+                </button>
+            </section>
+        </div>
+
+        <button id="start-button" class="main-button">START</button>
+
+        <button id="game-process" class="hidden">Tap the Square to Earn a Point</button>
+
+    </div>
+
+    <dialog id="user-settings" aria-labelledby="settings-title">
+        <form method="dialog" class="settings-card">
+            <button class="settings-close" type="submit" aria-label="Close settings" title="Close settings"><span aria-hidden="true">&times;</span></button>
+            <h2 id="settings-title">User settings</h2>
+            <fieldset class="theme-options">
+                <legend>Appearance</legend>
+                <label class="theme-toggle"><span>Light</span><input id="theme-toggle" type="checkbox" role="switch" aria-label="Dark theme" checked><span class="theme-toggle-track" aria-hidden="true"></span><span>Dark</span></label>
+            </fieldset>
+            <button id="restart-level-button" class="main-button" type="button">Restart Level</button>
+            <button id="restart-game-button" class="main-button" type="button">Restart Game</button>
+        </form>
+    </dialog>
+    <script src="script.js?v=10"></script>
+
+</body>
+</html>

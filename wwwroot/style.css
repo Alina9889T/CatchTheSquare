@@ -1,0 +1,668 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #15152a, #242447);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.game {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    padding: 24px;
+}
+
+h1 {
+    margin: 0 0 24px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Statistics */
+
+.stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.stats .panel {
+    flex: 1;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.stats .stat-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+.stats .value {
+    margin-top: 4px;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.stats .panel .scorePanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.stats .panel .scorePanel  > * {
+    display: flex;
+    align-items: center;
+}
+
+/* Game area */
+
+#game-area {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: radial-gradient( circle at center, rgba(255, 255, 255, 0.04), transparent 60% ), rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Square */
+
+#square {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    z-index: 2;
+}
+
+#circle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    z-index: 1;
+}
+
+#square.level1 {
+    background: linear-gradient( 135deg, #7c5cff, #a855f7 );
+    box-shadow: 0 8px 25px rgba(124, 92, 255, 0.5);
+}
+
+#square.level2 {
+    background: linear-gradient( 135deg, #f472b6, #ec4899 );
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.45);
+}
+
+#square.level3 {
+    background: linear-gradient( 135deg, #34d399, #059669 );
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.5);
+}
+
+#square.level4 {
+    background: linear-gradient( 135deg, #facc15, #eab308 );
+    box-shadow: 0 8px 25px rgba(234, 179, 8, 0.5);
+}
+
+#circle.level1 {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+}
+
+#circle.level2 {
+    background: linear-gradient(135deg, #f43f5e, #ec4899);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.45);
+}
+
+#circle.level3 {
+    background: linear-gradient(135deg, #10b981, #14b8a6);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+#circle.level4 {
+    background: linear-gradient(135deg, #f59e0b, #facc15);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+}
+
+#square.level1:hover {
+    box-shadow: 0 10px 30px rgba(124, 92, 255, 0.7);
+    filter: brightness(1.1);
+}
+
+#square.level2:hover {
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.7);
+    filter: brightness(1.1);
+}
+
+#square.level3:hover {
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.7);
+    filter: brightness(1.1);
+}
+
+#square.level4:hover {
+    box-shadow: 0 10px 30px rgba(234, 179, 8, 0.7);
+    filter: brightness(1.08);
+}
+
+#square.pulse {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+#circle.pulse {
+    animation: pulseInv 1s ease-in-out infinite;
+}
+
+#square.disabled, #circle.disabled {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.4;
+    box-shadow: none;
+    animation: none;
+}
+
+/*#square:hover {
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.65);
+}*/
+
+#square:not(.pulse):hover {
+    transform: scale(1.08);
+}
+
+#square:not(.pulse):active {
+    transform: scale(0.9);
+}
+
+#square.hit:not(.pulse) {
+    animation: squareHit 0.15s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.1);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0.1);
+    }
+}
+
+@keyframes pulseInv {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Buttons */
+
+#user-settings-button {
+    position: absolute;
+    top: 8px;
+    right: 24px;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background: rgba(124, 92, 255, 0.15);
+    color: #e5ddff;
+    font-family: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#user-settings-button:hover {
+    background: rgba(124, 92, 255, 0.3);
+    border-color: #a855f7;
+}
+
+#user-settings-button:active {
+    background: rgba(124, 92, 255, 0.45);
+}
+
+#user-settings-button:focus-visible {
+    outline: 2px solid #c4b5fd;
+    outline-offset: 3px;
+}
+
+
+.main-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient( 135deg, #7c5cff, #a855f7 );
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(124, 92, 255, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.main-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(124, 92, 255, 0.4);
+}
+
+.main-button:active {
+    transform: scale(0.97);
+}
+
+/* Game process */
+
+#game-process {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    text-align: center;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Level completed or Game over */
+
+.overlay-card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    text-align: center;
+    /* Затемняем игровое поле */
+    background: rgba(10, 10, 25, 0.75);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+/* Карточка со счётом */
+
+.overlay-card::before {
+    content: "";
+    position: absolute;
+    width: 85%;
+    max-width: 320px;
+    height: 300px;
+    border-radius: 24px;
+    background: rgba(35, 32, 65, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* Всё содержимое поверх карточки */
+
+.overlay-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.overlay-card-icon {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.overlay-card h2 {
+    margin: 0 0 6px;
+    font-size: 25px;
+}
+
+.overlay-card p {
+    margin: 8px 0 4px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.overlay-card-score {
+    display: block;
+    margin-bottom: 18px;
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.overlay-card .main-button {
+    width: 80%;
+    max-width: 260px;
+    margin-top: 0;
+}
+
+.overlay-card:not(.hidden) {
+    animation: fadeIn 0.25s ease-out;
+}
+
+.overlay-card:not(.hidden)::before {
+    animation: scaleIn 0.3s ease-out;
+}s
+
+.overlay-card:not(.hidden) > * {
+    animation: contentIn 0.3s ease-out;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+@keyframes contentIn {
+    from {
+        transform: translateY(8px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes squareHit {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(0.82);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Time Warnig */
+
+#time-stat.warning {
+    color: #ff6b6b;
+    animation: timeWarning 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes timeWarning {
+    from {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    to {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .game {
+        padding: 16px;
+    }
+
+    #user-settings-button {
+        top: 0;
+        right: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 18px;
+    }
+
+    #game-area {
+        height: 65vh;
+        min-height: 400px;
+        max-height: 600px;
+    }
+
+    #square {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+/* User settings */
+#user-settings {
+    width: min(320px, calc(100% - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    background: #232041;
+    color: white;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+}
+
+#user-settings::backdrop {
+    background: rgba(10, 10, 25, 0.75);
+    backdrop-filter: blur(5px);
+}
+
+.settings-card h2 {
+    padding-right: 24px;
+    margin: 0 0 24px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.theme-options {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.theme-options legend {
+    margin-bottom: 12px;
+}
+
+.settings-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: inherit;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.settings-close:hover {
+    background: rgba(124, 92, 255, 0.2);
+}
+
+.theme-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 1px solid rgba(124, 92, 255, 0.35);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.theme-toggle input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.theme-toggle-track {
+    position: relative;
+    flex: 0 0 52px;
+    height: 28px;
+    border-radius: 14px;
+    background: #8a819e;
+    transition: background 0.15s ease;
+}
+
+.theme-toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.15s ease;
+}
+
+.theme-toggle input:checked + .theme-toggle-track {
+    background: #7c5cff;
+}
+
+.theme-toggle input:checked + .theme-toggle-track::before {
+    transform: translateX(24px);
+}
+
+.settings-card .main-button:focus-visible,
+.settings-close:focus-visible,
+.theme-toggle input:focus-visible + .theme-toggle-track {
+    outline: 2px solid #a78bfa;
+    outline-offset: 4px;
+}
+
+/* Light theme */
+body[data-theme="light"] {
+    background: linear-gradient(135deg, #f5f3ff, #e4e7f5);
+    color: #25213e;
+    color-scheme: light;
+}
+
+body[data-theme="light"] .stats .panel,
+body[data-theme="light"] #game-process {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(70, 55, 115, 0.15);
+    color: #625a78;
+}
+
+body[data-theme="light"] .stats .value {
+    color: #25213e;
+}
+
+body[data-theme="light"] #game-area {
+    background: radial-gradient(circle at center, #fff, #eeebfa);
+    border-color: rgba(70, 55, 115, 0.15);
+    box-shadow: 0 20px 50px rgba(65, 50, 100, 0.12);
+}
+
+body[data-theme="light"] #user-settings-button {
+    color: #5b35b5;
+    border-color: rgba(124, 92, 255, 0.35);
+}
+
+body[data-theme="light"] .overlay-card,
+body[data-theme="light"] #user-settings::backdrop {
+    background: rgba(225, 222, 240, 0.75);
+}
+
+body[data-theme="light"] .overlay-card::before,
+body[data-theme="light"] #user-settings {
+    background: #faf9ff;
+    color: #25213e;
+    border-color: rgba(70, 55, 115, 0.15);
+    box-shadow: 0 20px 50px rgba(65, 50, 100, 0.18);
+    color-scheme: light;
+}
+
+body[data-theme="light"] .overlay-card p {
+    color: #625a78;
+}
+
+body[data-theme="light"] #time-stat.warning {
+    color: #c52d43;
+}
+/* Keep the initial screen neutral until the user theme is loaded. */
+body.theme-loading {
+    background: #e4e7ed;
+}
+
+body.theme-loading .game {
+    visibility: hidden;
+}

@@ -1,0 +1,18 @@
+# Visual Studio user state and indexes
+.vs/
+*.suo
+*.user
+
+# .NET build output
+bin/
+obj/
+
+# Local Cloudflare/Wrangler state and secrets
+.wrangler/
+.dev.vars*
+.env*
+
+# Runtime data and logs
+users.json
+*.log
+

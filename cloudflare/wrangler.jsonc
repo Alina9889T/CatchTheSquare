@@ -1,0 +1,21 @@
+{
+  "name": "catch-the-square",
+  "account_id": "96f982801d9a19a1ee9d9a03f7cae8b7",
+  "compatibility_date": "2026-09-11",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "catch-the-square",
+      "database_id": "9431e8cc-9d3a-443c-9221-f4d072add265",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "main": "worker.mjs",
+  "assets": {
+    "directory": "../wwwroot",
+    "run_worker_first": [
+      "/api/*"
+    ],
+    "binding": "ASSETS"
+  }
+}
